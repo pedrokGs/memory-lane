@@ -1,6 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'firebase_options_dev.dart' as dev;
+import 'firebase_options_prod.dart' as prod;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  bool isProd = bool.fromEnvironment('dart.vm.product');
+
+  await Firebase.initializeApp(
+    options: isProd
+        ? prod.DefaultFirebaseOptions.currentPlatform
+        : dev.DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
