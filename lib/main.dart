@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memory_lane/providers/user_provider.dart';
+import 'package:memory_lane/services/auth_service.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options_dev.dart' as dev;
 import 'firebase_options_prod.dart' as prod;
 
@@ -12,11 +15,17 @@ void main() async {
         ? prod.DefaultFirebaseOptions.currentPlatform
         : dev.DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(
+      MultiProvider(
+          providers: [
+            Provider<UserProvider>(create: (context) => UserProvider(AuthService()),)
+          ],
+          child: MemoryLaneApp())
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MemoryLaneApp extends StatelessWidget {
+  const MemoryLaneApp({super.key});
 
   @override
   Widget build(BuildContext context) {
