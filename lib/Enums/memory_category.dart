@@ -1,0 +1,1 @@
+enum MemoryCategory {none, travel_beach, travel_hike, travel_city}
