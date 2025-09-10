@@ -11,6 +11,8 @@ class MemoryProvider extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
+  List<Memory> get memories => _memoriesList;
+
   Future<void> getMemories() async{
     _isLoading = true;
     notifyListeners();

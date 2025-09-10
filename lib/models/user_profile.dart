@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'memory.dart';
-
 class UserProfile {
   final String uid;
   final String email;
@@ -9,16 +7,15 @@ class UserProfile {
   final String photoURL;
   final DateTime createdAt;
 
-  final List<Memory> favoriteMemories;
+  final List<String> favoriteMemoryIds;
   final List<String> preferredCategories;
   final String lastVisitedMemoryId;
-  final List<Memory> visitedMemories;
+  final List<String> visitedMemoryIds;
 
   final List<String> moodTags;
   final List<String> customTags;
 
   final bool notificationsEnabled;
-
   final bool isPrivate;
 
   UserProfile({
@@ -27,10 +24,10 @@ class UserProfile {
     required this.displayName,
     required this.photoURL,
     required this.createdAt,
-    required this.favoriteMemories,
+    required this.favoriteMemoryIds,
     required this.preferredCategories,
     required this.lastVisitedMemoryId,
-    required this.visitedMemories,
+    required this.visitedMemoryIds,
     required this.moodTags,
     required this.customTags,
     required this.notificationsEnabled,
@@ -44,12 +41,10 @@ class UserProfile {
       displayName: json["displayName"] ?? "",
       photoURL: json["photoURL"] ?? "",
       createdAt: (json["createdAt"] as Timestamp).toDate(),
-      favoriteMemories:
-          json["favoriteMemories"], // TODO: implementar corretamente, utilizando map() => Memory.fromMap
+      favoriteMemoryIds: List<String>.from(json["favoriteMemories"] ?? []),
       preferredCategories: List<String>.from(json["preferredCategories"] ?? []),
       lastVisitedMemoryId: json["lastVisitedMemoryId"] ?? "",
-      visitedMemories:
-          json["visitedMemories"], // TODO: implementar corretamente, utilizando map() => Memory.fromMap
+      visitedMemoryIds: List<String>.from(json["visitedMemories"] ?? []),
       moodTags: List<String>.from(json["moodTags"] ?? []),
       customTags: List<String>.from(json["customTags"] ?? []),
       notificationsEnabled: json["notificationsEnabled"] ?? false,
@@ -63,10 +58,10 @@ class UserProfile {
     "displayName": displayName,
     "photoURL": photoURL,
     "createdAt": Timestamp.fromDate(createdAt),
-    "favoriteMemories": favoriteMemories.map((m) => m.toJson()).toList(),
+    "favoriteMemories": favoriteMemoryIds,
     "preferredCategories": preferredCategories,
     "lastVisitedMemoryId": lastVisitedMemoryId,
-    "visitedMemories": visitedMemories.map((m) => m.toJson()).toList(),
+    "visitedMemories": visitedMemoryIds,
     "moodTags": moodTags,
     "customTags": customTags,
     "notificationsEnabled": notificationsEnabled,

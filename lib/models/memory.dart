@@ -46,9 +46,17 @@ class Memory {
       description: json["description"] ?? "",
       category: category,
       photoUrl: json["photoUrl"] ?? "",
-      latitude: json["latitude"] as double ?? 0.00,
-      longitude: json["longitude"] as double ?? 0.00,
+      latitude: _toDouble(json["latitude"]),
+      longitude: _toDouble(json["longitude"]),
       timestamp: json["timestamp"] ?? Timestamp.now(),
     );
   }
+}
+
+double _toDouble(dynamic value) {
+  if (value == null) return 0.0;
+  if (value is int) return value.toDouble();
+  if (value is double) return value;
+  if (value is String) return double.tryParse(value) ?? 0.0;
+  return 0.0;
 }

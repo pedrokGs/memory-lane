@@ -5,26 +5,26 @@ class AuthService{
 
   User? get currentUser => _auth.currentUser;
 
-  Future<UserCredential?> login(String email, String password) async{
+  Future<UserCredential> login(String email, String password) async{
     try{
       if(password.isNotEmpty && email.isNotEmpty){
         return await _auth.signInWithEmailAndPassword(email: email, password: password);
       }
+      throw FirebaseAuthException(code: "The fields are empty");
     } catch (e){
       throw FirebaseAuthException(code: "Invalid Credentials");
     }
-    return null;
   }
 
-  Future<UserCredential?> register(String email, String password) async{
+  Future<UserCredential> register(String email, String password) async{
     try{
       if(password.isNotEmpty && email.isNotEmpty){
         return await _auth.createUserWithEmailAndPassword(email: email, password: password);
       }
+      throw FirebaseAuthException(code: "The fields are empty");
     }catch (e){
       throw FirebaseAuthException(code: "There is an error on register");
     }
-    return null;
   }
 
   Future<void> logout() async {
