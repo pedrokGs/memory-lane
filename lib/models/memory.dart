@@ -23,7 +23,6 @@ class Memory {
   });
 
   Map<String, dynamic> toJson() => {
-    "id": id,
     "title": title,
     "description": description,
     "category": category,
@@ -33,7 +32,7 @@ class Memory {
     "timestamp": timestamp,
   };
 
-  factory Memory.fromJson(Map<String, dynamic> json) {
+  factory Memory.fromJson(Map<String, dynamic> json, String id) {
     MemoryCategory category;
     try{
       category = MemoryCategory.values.firstWhere((e)=> e.name == json["category"]);
@@ -42,13 +41,13 @@ class Memory {
     }
 
     return Memory(
-      id: json["id"] ?? "0",
+      id: id,
       title: json["title"] ?? "",
       description: json["description"] ?? "",
       category: category,
       photoUrl: json["photoUrl"] ?? "",
-      latitude: json["latitude"] ?? 0.00,
-      longitude: json["longitude"] ?? 0.00,
+      latitude: json["latitude"] as double ?? 0.00,
+      longitude: json["longitude"] as double ?? 0.00,
       timestamp: json["timestamp"] ?? Timestamp.now(),
     );
   }
