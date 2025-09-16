@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memory_lane/providers/memory_provider.dart';
+import 'package:memory_lane/providers/user_profile_provider.dart';
 import 'package:memory_lane/providers/user_provider.dart';
 import 'package:memory_lane/screens/authentication/login_screen.dart';
 import 'package:memory_lane/screens/authentication/register_screen.dart';
@@ -25,7 +27,8 @@ void main() async {
   runApp(
       MultiProvider(
           providers: [
-            ChangeNotifierProvider<UserProvider>(create: (context) => UserProvider(AuthService()),)
+            ChangeNotifierProvider<UserProvider>(create: (context) => UserProvider(AuthService(), UserProfileProvider()),),
+            ChangeNotifierProvider<MemoryProvider>(create: (context) => MemoryProvider(),),
           ],
           child: MemoryLaneApp())
   );
